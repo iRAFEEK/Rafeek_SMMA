@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+{% block title %}Submitted Tasks Report{% endblock %}
+{% block content %}
+<h1>Submitted Tasks Report</h1>
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Task Description</th>
+            <th>Assigned To</th>
+            <th>Date Assigned</th>
+            <th>Date In Progress</th>
+            <th>Date Completed</th>
+            <th>Time to Complete</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for task in tasks %}
+            <tr>
+                <td>{{ task.task_description }}</td>
+                <td>{{ task.assigned_worker.name }}</td>
+                <td>{{ task.created_at }}</td>
+                <td>{{ task.in_progress_time }}</td>
+                <td>{{ task.completion_time }}</td>
+                <td>
+                    {% if task.in_progress_time and task.completion_time %}
+                        {{ (task.completion_time - task.in_progress_time).total_seconds() / 3600 }} hours
+                        {% if task.deadline %}
+                            {% if task.completion_time > task.deadline %}
+                                <span class="text-danger">Overdue</span>
+                            {% else %}
+                                <span class="text-success">On Time</span>
+                            {% endif %}
+                        {% endif %}
+                    {% else %}
+                        N/A
+                    {% endif %}
+                </td>
+            </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

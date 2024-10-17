@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+
+{% block title %}Add Client{% endblock %}
+
+{% block content %}
+<h2>Add Client</h2>
+<form method="POST">
+    {{ form.hidden_tag() }}
+    <div class="form-group">
+        {{ form.name.label(class="form-control-label") }}
+        {{ form.name(class="form-control") }}
+    </div>
+    <div class="form-group">
+        {{ form.contact_number.label(class="form-control-label") }}
+        {{ form.contact_number(class="form-control") }}
+    </div>
+    <div class="form-group">
+        {{ form.business_category.label(class="form-control-label") }}
+        {{ form.business_category(class="form-control") }}
+    </div>
+    <div class="form-group">
+        {{ form.social_media_handles.label(class="form-control-label") }}
+        {{ form.social_media_handles(class="form-control") }}
+    </div>
+    <div class="form-group">
+        {{ form.goals.label(class="form-control-label") }}
+        {{ form.goals(class="form-control") }}
+    </div>
+    <div class="form-group">
+        {{ form.specific_requests.label(class="form-control-label") }}
+        {{ form.specific_requests(class="form-control") }}
+    </div>
+    <div class="form-group">
+        {{ form.submit(class="btn btn-primary btn-block") }}
+    </div>
+</form>
+{% endblock %}

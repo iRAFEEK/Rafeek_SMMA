@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+
+{% block title %}Submitted Forms{% endblock %}
+
+{% block content %}
+<h1>Submitted Forms</h1>
+<ul>
+    {% for client in clients %}
+    <li>
+        <a href="{{ url_for('main.client', client_id=client.id) }}">{{ client.name }}</a>
+    </li>
+    {% endfor %}
+</ul>
+{% if clients|length == 0 %}
+    <p>No forms submitted yet.</p>
+{% endif %}
+{% endblock %}

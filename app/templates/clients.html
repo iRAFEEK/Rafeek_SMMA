@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+
+{% block title %}Clients{% endblock %}
+
+{% block content %}
+<h1>Clients</h1>
+<a class="btn btn-primary" href="{{ url_for('main.download_clients') }}">Download Clients</a>
+<a class="btn btn-secondary" href="{{ url_for('main.add_client') }}">Add Client</a>
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Contact Number</th>
+            <th>Business Category</th>
+            <th>Social Media Handles</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for client in clients %}
+        <tr>
+            <td><a href="{{ url_for('main.client_profile', client_id=client.id) }}">{{ client.name }}</a></td>
+            <td>{{ client.contact_number }}</td>
+            <td>{{ client.business_category }}</td>
+            <td>{{ client.social_media_handles }}</td>
+            <td>
+                <a class="btn btn-primary btn-sm" href="{{ url_for('main.client_profile', client_id=client.id) }}">View</a>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

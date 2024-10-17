@@ -1,0 +1,101 @@
+{% extends "base.html" %}
+{% block title %}Kanban Board{% endblock %}
+{% block content %}
+<h1>Kanban Board</h1>
+<div class="kanban-board">
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>To Do</th>
+                <th>In Progress</th>
+                <th>Completed</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td class="kanban-tasks" data-status="Assigned">
+                    {% for task in tasks if task.status == 'Assigned' %}
+                        <div class="kanban-task card mb-2" data-task-id="{{ task.id }}">
+                            <div class="card-body">
+                                <p class="card-text"><strong>Assigned to :</strong> {{ task.assigned_worker.name  }}</p>
+                                <p class="card-text"><strong>Task : </strong>{{ task.task_description }}</p>
+                                {% if not current_user.is_manager %}
+                                    <button class="move-task-btn btn btn-primary" data-task-id="{{ task.id }}" data-status="In Progress">Move to In Progress</button>
+                                {% endif %}
+                            </div>
+                        </div>
+                    {% endfor %}
+                </td>
+                <td class="kanban-tasks" data-status="In Progress">
+                    {% for task in tasks if task.status == 'In Progress' %}
+                        <div class="kanban-task card mb-2" data-task-id="{{ task.id }}">
+                            <div class="card-body">
+                                <p class="card-text"><strong>Assigned to :</strong> {{ task.assigned_worker.name  }}</p>
+                                <p class="card-text"><strong>Task : </strong>{{ task.task_description }}</p>
+                                {% if not current_user.is_manager %}
+                                    <button class="move-task-btn btn btn-primary" data-task-id="{{ task.id }}" data-status="Completed">Move to Completed</button>
+                                {% endif %}
+                            </div>
+                        </div>
+                    {% endfor %}
+                </td>
+                <td class="kanban-tasks" data-status="Completed">
+                    {% for task in tasks if task.status == 'Completed' %}
+                        <div class="kanban-task card mb-2" data-task-id="{{ task.id }}">
+                            <div class="card-body">
+                                <p class="card-text"><strong>Assigned to :</strong> {{ task.assigned_worker.name  }}</p>
+                                <p class="card-text"><strong>Task : </strong>{{ task.task_description }}</p>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+{% if current_user.is_manager %}
+    <div class="mb-3">
+        <a class="btn btn-primary" href="{{ url_for('main.assign_task') }}">Assign Task</a>
+    </div>
+{% endif %}
+{% endblock %}
+
+{% block scripts %}
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const moveTaskButtons = document.querySelectorAll('.move-task-btn');
+
+    moveTaskButtons.forEach(button => {
+        button.addEventListener('click', (e) => {
+            const taskId = e.target.getAttribute('data-task-id');
+            const newStatus = e.target.getAttribute('data-status');
+            console.log('Move task ID:', taskId, 'New status:', newStatus);
+
+            // Get the CSRF token from the meta tag
+            const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+            console.log('CSRF Token:', csrfToken);
+
+            // Update task status in the backend
+            fetch('{{ url_for("main.update_task_status") }}', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRFToken': csrfToken  // Ensure CSRF protection
+                },
+                body: JSON.stringify({ task_id: taskId, status: newStatus })
+            }).then(response => {
+                console.log('Response status:', response.status);
+                if (response.ok) {
+                    location.reload();  // Reload the page to reflect the changes
+                } else {
+                    throw new Error('Failed to update task status');
+                }
+            }).catch(error => {
+                console.error('Error:', error);
+            });
+        });
+    });
+});
+</script>
+{% endblock %}

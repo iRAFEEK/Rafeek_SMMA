@@ -1,0 +1,71 @@
+{% extends "base.html" %}
+
+{% block title %}Manager Dashboard{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <h1 class="text-center mb-4">Manager Dashboard</h1>
+    <div class="row">
+        <div class="col-md-6">
+            <div class="card bg-white text-black mb-4">
+                <div class="card-header bg-primary text-white">
+                    <h3>Task Overview</h3>
+                </div>
+                <div class="card-body">
+                    <p><strong>Pending:</strong> {{ pending_tasks_count }}</p>
+                    <p><strong>In Progress:</strong> {{ in_progress_tasks_count }}</p>
+                    <p><strong>Completed:</strong> {{ completed_tasks_count }}</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="card bg-white text-black mb-4">
+                <div class="card-header bg-primary text-white">
+                    <h3>Client Overview</h3>
+                </div>
+                <div class="card-body">
+                    <p><strong>Total Clients:</strong> {{ total_clients_count }}</p>
+                    <p><strong>Active Clients:</strong> {{ active_clients_count }}</p>
+                    <p><strong>Inactive Clients:</strong> {{ inactive_clients_count }}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card bg-white text-black mb-4">
+                <div class="card-header bg-primary text-white">
+                    <h3>Recent Tasks</h3>
+                </div>
+                <div class="card-body">
+                    <table class="table table-bordered">
+                        <thead>
+                            <tr>
+                                <th>Task Description</th>
+                                <th>Assigned To</th>
+                                <th>Deadline</th>
+                                <th>Status</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for task in recent_tasks %}
+                            <tr>
+                                <td>{{ task.task_description }}</td>
+                                <td>{{ task.worker.name }}</td>
+                                <td>{{ task.deadline }}</td>
+                                <td>{{ task.status }}</td>
+                                <td>
+                                    <a href="{{ url_for('main.view_task', task_id=task.id) }}" class="btn btn-primary btn-sm">View</a>
+                                    <a href="{{ url_for('main.assign_task', task_id=task.id) }}" class="btn btn-secondary btn-sm">Assign</a>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

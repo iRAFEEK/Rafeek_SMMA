@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+
+{% block title %}Select Form{% endblock %}
+
+{% block content %}
+<h1>Select Form</h1>
+<ul>
+    <li><a href="{{ url_for('main.add_task', client_id=client_id) }}">Onboarding Task Form</a></li>
+    <li><a href="{{ url_for('main.add_content_idea', client_id=client_id) }}">Content Idea Form</a></li>
+    <li><a href="{{ url_for('main.add_metric', client_id=client_id) }}">Metric Form</a></li>
+</ul>
+{% endblock %}

@@ -1,0 +1,62 @@
+{% extends "base.html" %}
+
+{% block title %}Dashboard{% endblock %}
+
+{% block content %}
+<h1>Dashboard</h1>
+{% if current_user.is_manager %}
+<h2>Assigned Tasks</h2>
+<table class="table table-dark table-striped">
+    <thead>
+        <tr>
+            <th>Client ID</th>
+            <th>Task Description</th>
+            <th>Deadline</th>
+            <th>Status</th>
+            <th>Completion Description</th>
+            <th>Completion Link</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for task in tasks %}
+        <tr>
+            <td>{{ task.client_id }}</td>
+            <td>{{ task.task_description }}</td>
+            <td>{{ task.deadline }}</td>
+            <td>{{ task.status }}</td>
+            <td>{{ task.completion_description }}</td>
+            <td><a href="{{ task.completion_link }}" target="_blank">{{ task.completion_link }}</a></td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% else %}
+<h2>Your Tasks</h2>
+<table class="table table-dark table-striped">
+    <thead>
+        <tr>
+            <th>Client ID</th>
+            <th>Task Description</th>
+            <th>Deadline</th>
+            <th>Status</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for task in tasks %}
+        <tr>
+            <td>{{ task.client_id }}</td>
+            <td>{{ task.task_description }}</td>
+            <td>{{ task.deadline }}</td>
+            <td>{{ task.status }}</td>
+            <td>
+                {% if task.status == 'Assigned' %}
+                <a class="btn btn-primary" href="{{ url_for('main.submit_task', task_id=task.id) }}">Submit Task</a>
+                {% endif %}
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endif %}
+{% endblock %}

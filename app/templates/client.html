@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+
+{% block title %}Client Details{% endblock %}
+
+{% block content %}
+<h1>{{ client.name }}</h1>
+<p><strong>Contact Number:</strong> {{ client.contact_number }}</p>
+<p><strong>Business Category:</strong> {{ client.business_category }}</p>
+<p><strong>Social Media Handles:</strong> {{ client.social_media_handles }}</p>
+<p><strong>Goals:</strong> {{ client.goals }}</p>
+<p><strong>Specific Requests:</strong> {{ client.specific_requests }}</p>
+
+<h2>Onboarding Tasks</h2>
+<ul>
+    {% for task in onboarding_tasks %}
+    <li>{{ task.task_name }} - {{ task.responsible }} - {{ task.deadline }}</li>
+    {% endfor %}
+</ul>
+
+<h2>Content Ideas</h2>
+<ul>
+    {% for idea in content_ideas %}
+    <li>{{ idea.idea_source }} - {{ idea.description }} - <a href="{{ idea.link }}">{{ idea.link }}</a> - {{ idea.sound }} - {{ idea.status }}</li>
+    {% endfor %}
+</ul>
+
+<h2>Metrics</h2>
+<ul>
+    {% for metric in metrics %}
+    <li>{{ metric.platform }} - {{ metric.post_date }} - {{ metric.views }} views - {{ metric.likes }} likes - {{ metric.comments }} comments - {{ metric.shares }} shares</li>
+    {% endfor %}
+</ul>
+
+<h2>Tasks</h2>
+<ul>
+    {% for task in tasks %}
+    <li>{{ task.task_description }} - {{ task.deadline }} - {{ task.status }}</li>
+    {% endfor %}
+</ul>
+
+<a href="{{ url_for('main.add_task', client_id=client.id) }}" class="btn btn-primary">Add Onboarding Task</a>
+<a href="{{ url_for('main.assign_task') }}" class="btn btn-secondary">Assign Task</a>
+<a href="{{ url_for('main.add_content_idea', client_id=client.id) }}" class="btn btn-secondary">Add Content Idea</a>
+<a href="{{ url_for('main.add_metric', client_id=client.id) }}" class="btn btn-secondary">Add Metric</a>
+{% endblock %}

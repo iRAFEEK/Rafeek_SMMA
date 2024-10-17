@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+
+{% block title %}Worker Dashboard{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <h1 class="text-center mb-4">Worker Dashboard</h1>
+    <div class="row">
+        <div class="col-md-4">
+            <div class="card bg-white text-black mb-4">
+                <div class="card-header bg-primary text-white">
+                    <h3>Task Overview</h3>
+                </div>
+                <div class="card-body">
+                    <p><strong>Pending:</strong> {{ pending_tasks_count }}</p>
+                    <p><strong>In Progress:</strong> {{ in_progress_tasks_count }}</p>
+                    <p><strong>Completed:</strong> {{ completed_tasks_count }}</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card bg-white text-black mb-4">
+                <div class="card-header bg-primary text-white">
+                    <h3>Performance Metrics</h3>
+                </div>
+                <div class="card-body">
+                    <p><strong>Tasks Completed:</strong> {{ tasks_completed }}</p>
+                    <p><strong>Average Completion Time:</strong> {{ average_completion_time }}</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card bg-white text-black mb-4">
+                <div class="card-header bg-primary text-white">
+                    <h3>Profile</h3>
+                </div>
+                <div class="card-body">
+                    <p><strong>Name:</strong> {{ current_user.name }}</p>
+                    <p><strong>Email:</strong> {{ current_user.email }}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+
+{% block title %}Forms{% endblock %}
+<!-- The following block of code is the content block. -->
+ <!-- Client on boarding 
+  materials 
+  Calendar
+  Notificationsystem
+   -->
+
+
+{% block content %}
+<h1>Forms</h1>
+<ul>
+    <li><a href="{{ url_for('main.add_client') }}">Onboarding Client</a></li>
+    <li><a href="{{ url_for('main.add_content_idea', client_id=1) }}">Content Idea Form</a></li> 
+    <li><a href="{{ url_for('main.add_metric', client_id=1) }}">Metric Form</a></li> 
+    
+</ul>
+{% endblock %}

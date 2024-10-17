@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}Guidely SMMA{% endblock %}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark">
+        <a class="navbar-brand" href="{{ url_for('main.index') }}">Guidely SMMA</a>
+        <div class="collapse navbar-collapse">
+            <ul class="navbar-nav ml-auto">
+                {% if current_user.is_authenticated %}
+                    <li class="nav-item"><a class="nav-link" href="{{ url_for('main.index') }}">Home</a></li>
+                    {% if current_user.is_manager %}
+                        <li class="nav-item"><a class="nav-link" href="{{ url_for('main.manager_dashboard') }}">Dashboard</a></li>
+                        <li class="nav-item"><a class="nav-link" href="{{ url_for('main.clients') }}">Clients</a></li>
+                        <li class="nav-item"><a class="nav-link" href="{{ url_for('main.kanban_board') }}">Kanban Board</a></li>
+                        <li class="nav-item"><a class="nav-link" href="{{ url_for('main.task_list') }}">Task List</a></li>
+                        <li class="nav-item"><a class="nav-link" href="{{ url_for('main.submitted_tasks') }}">Submitted Tasks</a></li>
+                        <li class="nav-item"><a class="nav-link" href="{{ url_for('main.submitted_tasks_report') }}">report</a></li>
+                    {% else %}
+                        <li class="nav-item"><a class="nav-link" href="{{ url_for('main.kanban_board') }}">Kanban Board</a></li>
+                        <li class="nav-item"><a class="nav-link" href="{{ url_for('main.worker_dashboard') }}">Dashboard</a></li>
+                        <li class="nav-item"><a class="nav-link" href="{{ url_for('main.task_list') }}">Task List</a></li>
+                    {% endif %}
+                    <li class="nav-item"><a class="nav-link" href="{{ url_for('main.forms') }}">Forms</a></li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ url_for('main.notifications') }}">
+                            Notifications
+                            <span class="badge badge-danger">{{ unread_notification_count }}</span>
+                        </a>
+                    </li>
+                    <li class="nav-item"><a class="nav-link" href="{{ url_for('auth.logout') }}">Logout</a></li>
+                {% else %}
+                    <li class="nav-item"><a class="nav-link" href="{{ url_for('auth.login') }}">Login</a></li>
+                    <li class="nav-item"><a class="nav-link" href="{{ url_for('auth.register') }}">Register</a></li>
+                {% endif %}
+            </ul>
+        </div>
+    </nav>
+    <div class="container">
+        {% block content %}{% endblock %}
+    </div>
+    <footer>
+        <p>&copy; Guidely SMMA. All rights reserved.</p>
+    </footer>
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    {% block scripts %}{% endblock %}
+</body>
+</html>

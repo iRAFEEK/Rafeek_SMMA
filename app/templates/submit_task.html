@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+
+{% block title %}Submit Task{% endblock %}
+
+{% block content %}
+<h1>Submit Task</h1>
+<form method="POST">
+    {{ form.hidden_tag() }}
+    <div class="form-group">
+        {{ form.completion_description.label(class="form-control-label") }}
+        {{ form.completion_description(class="form-control") }}
+    </div>
+    <div class="form-group">
+        {{ form.completion_link.label(class="form-control-label") }}
+        {{ form.completion_link(class="form-control") }}
+    </div>
+    <div class="form-group">
+        {{ form.submit(class="btn btn-primary btn-block") }}
+    </div>
+</form>
+{% endblock %}
