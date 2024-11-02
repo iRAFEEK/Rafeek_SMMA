@@ -78,8 +78,5 @@ Feel free to open issues or submit pull requests to improve the functionality or
 
 This project is licensed under the MIT License. See the `LICENSE` file for more details.
 
-## **Contact**
 
-- **Rany Hanna** - [LinkedIn](https://www.linkedin.com/in/rany-hanna-895319169/) - [GitHub](https://github.com/Rany29-coder)
 
-For more details, visit the [Rafeek SMMA GitHub repository](https://github.com/Rany29-coder/Rafeek-SMMA).
