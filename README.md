@@ -30,7 +30,7 @@
 
 1. **Clone the Repository**:
    ```bash
-   git clone https://github.com/Rany29-coder/Rafeek-SMMA.git
+   git clone https://github.com/iRAFEEK/Rafeek-SMMA.git
    ```
 
 2. **Create a Virtual Environment**:
